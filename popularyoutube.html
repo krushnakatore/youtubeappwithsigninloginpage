@@ -98,7 +98,12 @@
 <script>
     var name2 = JSON.parse(window.localStorage.getItem('user'))
 var user_name = document.getElementById("username")
-user_name.append(name2)
+if(name2 == null){
+         user_name =""
+     }
+   else{
+       user_name.append(name2)
+   } 
 
 //AIzaSyDwFE-lZhy7O_P3Ariwba_BwdWWooF2_UU
 
