@@ -12,6 +12,7 @@
     }
 </style>
 <body>
+    <div>Youtube Log in Page</div>
     <div id = "login"></div>
     <form onsubmit = "Login(event)" id ="login-form">
         
@@ -71,7 +72,7 @@
         })
 
         .catch((err)=>{
-         console.log("Invalid Username or Password")
+         alert("Invalid Username or Password")
         
         });
 
@@ -101,7 +102,7 @@
            console.log(res);
            if(res.error == true){
             wrong_passw.append("Wrong Username or Password")
-                console.log("Wrong Username or Password")
+                alert("Wrong Username or Password")
             }else{
                 console.log(username)
                 // let div = document.createElement("div")
