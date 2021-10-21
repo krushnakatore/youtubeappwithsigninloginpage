@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-family: sans-serif;
+            background-color: lightslategray;
+            
+        }
+        input {
+          width: 200px;
+          margin-left: 700px;
+        }
+    
+        #movies {
+          /* height: 200px; */
+          margin-left: 700px;
+          width: 206px;
+          border: 1px solid black;
+          overflow: scroll;
+          border-top: none;
+        }
+        .div1{
+            width:500px;
+            margin-top: -200px;
+            margin-left: 300px;
+            background-color: cornflowerblue;
+            border: 1px solid darkblue;
+            border-radius: 4%;
+        }
+        .div2{
+            padding-top: 1%;
+            padding-left:35%;
+        }
+        .div3{
+            padding-left:35%;
+        }
+
+        .div4{
+            padding-left:35%;
+        }
+        img{
+            width:30%;
+            height: 300px;
+        }
+        #sign{
+            padding-left:20px;
+            display: inline-block;
+        }
+        #log{
+            padding-left:20px;
+            display: inline-block;
+        }
+        /* #popular{
+            /* padding-left:400px; */
+        /* } */ 
+        #logo{
+            display: inline-block;
+        }
+        #user{
+            width: 93%;
+            text-align: right;
+            display: inline-block;
+        }
+      </style>
+</head>
+<body>
+    <div>
+        
+        <div id ="logo">MOVIEAPP</div>
+        <div id ="user"></div>
+    </div>
+    <input oninput="debounce(main,1000)" type="text" id="movie" placeholder="Enter movie name" />
+    <button id = "popular">Popular Movies</button>
+    <div id = "sign"><a href = "moviesignin.html">Sign Up</a></div>
+    <div id = "log"><a href = "loginmovie.html">Log In</a></div>
+    <div id="movies" ></div>
+    <div id ="movies1"></div>
+    
+</body>
+</html>
+<script>                       
+
+    let movie2 = document.getElementById("popular")
+
+    var name2 = JSON.parse(window.localStorage.getItem('user'))
+    var user_name = document.getElementById("user")
+    user_name.append(name2)
+
+
+    // let movies = document.getElementById("movies")
+   
+
+    movie2.onclick=()=>{
+        window.location.href = "popularmovies.html"
+    }
+    // movie2.addEventListener("onclick",click)
+
+    let movies_div = document.getElementById("movies");
+
+    
+    let movies_div1 = document.getElementById("movies1");
+     
+    var timerId;
+    async function searchMovies(movie_name){
+         
+         try{
+             let res = await fetch(`http://www.omdbapi.com/?s=${movie_name}&apikey=ea9653c8`);
+
+
+             let data = await res.json();
+
+             return data;
+         }
+         catch(e){
+             console.log(e)
+
+         }
+
+    }
+
+    function appendMovies(movies){
+        if(movies == undefined){
+           
+            return false;
+            
+        }
+
+        // movies_div.innerHTML = null;
+
+        // movies_div.
+
+        movies.forEach(function(movie){
+
+            
+             let p = document.createElement("p");
+
+            //let p1 = document.createElement("p");
+
+            p.innerText = movie.Title;
+
+            movies_div.append(p); 
+            
+            movies_div.style.height="200px"
+            
+
+            
+
+            //movies_div.append(p);
+            
+            p.onclick = ()=>{
+                //alert(movie.Title);
+                if(movies_div1.innerHTML !== null){
+                    movies_div1.innerHTML = null;
+                }
+
+                let box = document.createElement("div")
+                box.classList.add("div1")
+
+                
+
+                let box1 = document.createElement("img")
+                box1.classList.add("div2")
+  
+                box1.src = movie.Poster;
+
+                let box2 = document.createElement("p")
+                box2.classList.add("div3")
+
+                box2.innerText= movie.Title;
+
+
+                let box3 = document.createElement("p")
+                box3.classList.add("div4")
+
+                box3.innerText =movie.Year;
+
+                box.append(box1,box2,box3);
+
+                movies_div1.append(box);
+
+
+            }
+            // let div = document.createElement("div");
+            // div.style.width = "400px";
+            // div.style.height ="400px"
+            // div.append(p)
+            
+            // movies_div.append(div)
+            
+            
+        });
+       
+        
+       //movies.addEventListener(onclick,"show")
+    }
+
+    async function main(){
+
+        let name = document.getElementById("movie").value;
+
+        if(name.length < 3){
+            return false;
+        }
+
+        let res = await searchMovies(name);
+
+        let movies_data = res.Search
+
+        appendMovies(movies_data);
+         
+       // let res = await searchMovies(name);
+        
+
+        console.log(movies_data);
+        //console.log(res);
+        //movies_data.addEventListener("onclick",show12)
+    }
+
+    function debounce(func,delay){
+
+       if(timerId){
+           clearTimeout(timerId);
+       }
+
+        timerId = setTimeout(function(){
+            func();
+        },delay)
+     
+     }
+
+    
+
+    
+
+    
+</script>
