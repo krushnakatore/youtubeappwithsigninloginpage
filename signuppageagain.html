@@ -12,6 +12,7 @@
     }
 </style>
 <body>
+    <div>Youtube Sign Up Page</div>
     <div id = "signup"></div>
     <form onsubmit = "Signup(event)" id ="signup-form">
         <label for="fname">First name:</label><br>
@@ -73,7 +74,7 @@
         .then((res)=>{
             console.log(res)
             if(res.error == true){
-                wrong_pass.append("Uesername or Password already exists.")
+                alert("Username or Password already exists.")
                 // console.log("Uesername or Password already exists.")
             }else{
                 window.location.href="loginformagain.html"
